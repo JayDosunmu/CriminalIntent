@@ -3,6 +3,7 @@ package com.turtlewave.criminalintent;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,7 +16,7 @@ public class CrimeLab {
     private static CrimeLab crimeLab;
 
     private List<Crime> crimes;
-    private Crime lastModified;
+    private HashMap<UUID, Crime> crimeMap;
 
     public static CrimeLab get(Context context) {
         if (crimeLab == null) {
@@ -25,12 +26,14 @@ public class CrimeLab {
     }
 
     private CrimeLab(Context context) {
-        crimes = new ArrayList<Crime>();
+        crimes = new ArrayList<>();
+        crimeMap = new HashMap<>();
         for (int i=0; i<100; i++) {
             Crime crime = new Crime();
             crime.setTitle("Crime #"+i);
             crime.setSolved(i % 2 == 0);
             crimes.add(crime);
+            crimeMap.put(crime.getId(), crime);
         }
     }
 
@@ -39,10 +42,8 @@ public class CrimeLab {
     }
 
     public Crime getCrime(UUID id) {
-        for (Crime crime: crimes) {
-            if (crime.getId() == id) {
-                return crime;
-            }
+        if (crimeMap.containsKey(id)) {
+            return crimeMap.get(id);
         }
         return null;
     }
