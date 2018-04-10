@@ -15,6 +15,7 @@ public class CrimeLab {
     private static CrimeLab crimeLab;
 
     private List<Crime> crimes;
+    private Crime lastModified;
 
     public static CrimeLab get(Context context) {
         if (crimeLab == null) {
@@ -31,7 +32,6 @@ public class CrimeLab {
             crime.setSolved(i % 2 == 0);
             crimes.add(crime);
         }
-
     }
 
     public List<Crime> getCrimes() {
@@ -46,5 +46,4 @@ public class CrimeLab {
         }
         return null;
     }
-
 }
